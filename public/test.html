@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Demo Function</h1>
+    <button id="demo-function">Run Demo</button>
+    <div id="demo-result"></div>
+
+    <h1>Get Collection</h1>
+    <button id="get-collection">Get Collection</button>
+    <div id="collection-result"></div>
+
+    <h1>Get Item</h1>
+    <textarea id="item-id" placeholder="enter id ..."></textarea>
+    <button id="get-item">Get Item</button>
+    <div id="item-result"></div>
+    
+    <h1>Post Item</h1>
+
+    <h1>Put Item</h1>
+
+    <h1>Delete Item</h1>
+</body>
+<script>
+    document.getElementById("get-collection").addEventListener("click", () => {
+        fetch("http://localhost:3000/api/getCollection/pets")  // Ensure this matches your route
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("collection-result").innerHTML = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error("Error fetching collection:", error);
+            document.getElementById("collection-result").innerHTML = `<p style="color:red;">Error fetching data</p>`;
+        });
+    });
+    
+    document.getElementById("demo-function").addEventListener("click", () => {
+        fetch("http://localhost:3000/api/demo/pets/1")  // Fixed URL
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("demo-result").innerHTML = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error("Error fetching collection:", error);
+            document.getElementById("demo-result").innerHTML = `<p style="color:red;">Error fetching data</p>`;
+        });
+    });
+
+    
+    document.getElementById("get-item").addEventListener("click", () => {
+        const itemId = document.getElementById("item-id").value.trim(); 
+        if (!itemId || itemId === "enter item id ...") {
+            document.getElementById("item-result").innerHTML = "<p style='color:red;'>Please enter a valid item ID.</p>";
+            return;
+        }
+        // console.log(itemId);
+
+        fetch(`http://localhost:3000/api/getItem/pets/${itemId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        })
+        .then(data => {
+            document.getElementById("item-result").innerHTML = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error("Error fetching item:", error);
+            document.getElementById("item-result").innerHTML = `<p style="color:red;">Error fetching item.</p>`;
+        });
+    });
+
+    document.getElementById
+
+</script>
+</html>
