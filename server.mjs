@@ -61,6 +61,7 @@ async function getItem(req, res) {
 
 async function postItem(req, res) {
   // Implement Code to add 1 pet with new data
+  console.log("hi")
 }
 
 async function putItem(req, res) {
